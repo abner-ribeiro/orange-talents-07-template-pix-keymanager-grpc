@@ -5,6 +5,7 @@ import br.com.zup.TipoConta
 import br.com.zup.models.ChavePix
 import br.com.zup.pix.annotations.ChavePixPattern
 import io.micronaut.core.annotation.Introspected
+import java.util.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
@@ -21,7 +22,7 @@ data class NovaChaveDto(
         return ChavePix(
             clienteId = clienteId,
             tipoChave = tipoChave,
-            chave = chave,
+            chave = if(tipoChave == TipoChave.ALEATORIA) UUID.randomUUID().toString() else chave,
             tipoConta = tipoConta
         )
     }
