@@ -4,6 +4,7 @@ import br.com.zup.KeyManagerRegistraServiceGrpc
 import br.com.zup.NovaChaveRequest
 import br.com.zup.NovaChaveResponse
 import br.com.zup.models.ChavePix
+import br.com.zup.pix.client.ErpItauClient
 import br.com.zup.pix.toDto
 import io.grpc.Status
 import io.grpc.stub.StreamObserver
@@ -12,15 +13,16 @@ import org.slf4j.LoggerFactory
 import javax.validation.ConstraintViolationException
 
 @Singleton
-class RegistraChave(val service: NovaChaveService): KeyManagerRegistraServiceGrpc.KeyManagerRegistraServiceImplBase() {
+class RegistraChave(
+    val service: NovaChaveService): KeyManagerRegistraServiceGrpc.KeyManagerRegistraServiceImplBase() {
 
     private val logger = LoggerFactory.getLogger(RegistraChave::class.java)
 
     override fun cadastraChave(request: NovaChaveRequest, responseObserver: StreamObserver<NovaChaveResponse>?) {
-        val dtoTeste = request.toDto()
+        val chaveDto = request.toDto()
         var chave: ChavePix? = null
         try {
-            chave = service.validaECadastra(dtoTeste)
+            chave = service.validaECadastra(chaveDto)
         }catch (e: ConstraintViolationException) {
             responseObserver?.onError(
                 Status.INVALID_ARGUMENT
@@ -30,6 +32,12 @@ class RegistraChave(val service: NovaChaveService): KeyManagerRegistraServiceGrp
         }catch(e: ChavePixCadastradaException){
             responseObserver?.onError(
                 Status.ALREADY_EXISTS
+                    .withDescription(e.message)
+                    .asRuntimeException()
+            )
+        }catch(e: ClienteNaoEncontradoException){
+            responseObserver?.onError(
+                Status.NOT_FOUND
                     .withDescription(e.message)
                     .asRuntimeException()
             )

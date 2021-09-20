@@ -6,9 +6,11 @@ option java_outer_classname = "KeyManager";
 option objc_class_prefix = "HLW";
 
 package br.com.zup;
+import "google/protobuf/empty.proto";
 
 service KeyManagerRegistraService {
   rpc cadastraChave (NovaChaveRequest) returns (NovaChaveResponse) {}
+  rpc removeChave (RemoveChaveRequest) returns (google.protobuf.Empty){}
 }
 
 message NovaChaveRequest {
@@ -16,6 +18,11 @@ message NovaChaveRequest {
   TipoChave tipoChave = 2;
   string chave = 3;
   TipoConta tipoConta = 4;
+}
+
+message RemoveChaveRequest {
+  string clientId = 1;
+  string pixId = 2;
 }
 
 enum TipoChave{
