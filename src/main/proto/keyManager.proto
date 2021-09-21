@@ -10,6 +10,8 @@ import "google/protobuf/empty.proto";
 
 service KeyManagerRegistraService {
   rpc cadastraChave (NovaChaveRequest) returns (NovaChaveResponse) {}
+}
+service KeyManagerRemoveService{
   rpc removeChave (RemoveChaveRequest) returns (google.protobuf.Empty){}
 }
 
@@ -21,8 +23,8 @@ message NovaChaveRequest {
 }
 
 message RemoveChaveRequest {
-  string clientId = 1;
-  string pixId = 2;
+  string clienteId = 1;
+  int64 pixId = 2;
 }
 
 enum TipoChave{
