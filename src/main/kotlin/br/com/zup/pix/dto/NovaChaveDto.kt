@@ -3,6 +3,7 @@ package br.com.zup.pix.dto
 import br.com.zup.TipoChave
 import br.com.zup.TipoConta
 import br.com.zup.models.ChavePix
+import br.com.zup.models.Conta
 import br.com.zup.pix.annotations.ChavePixPattern
 import io.micronaut.core.annotation.Introspected
 import java.util.*
@@ -18,12 +19,13 @@ data class NovaChaveDto(
     @field: Size(max=77) val chave: String?,
     @field: NotNull val tipoConta: TipoConta?
     ) {
-    fun toModel(): ChavePix {
+    fun toModel(conta: Conta): ChavePix {
         return ChavePix(
             clienteId = clienteId,
             tipoChave = tipoChave,
             chave = if(tipoChave == TipoChave.ALEATORIA) UUID.randomUUID().toString() else chave,
-            tipoConta = tipoConta
+            tipoConta = tipoConta,
+            conta = conta
         )
     }
 }

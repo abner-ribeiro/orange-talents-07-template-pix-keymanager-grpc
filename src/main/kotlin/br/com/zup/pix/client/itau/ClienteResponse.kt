@@ -1,4 +1,4 @@
-package br.com.zup.pix.client
+package br.com.zup.pix.client.itau
 
 data class ClienteResponse(
     val id: String,

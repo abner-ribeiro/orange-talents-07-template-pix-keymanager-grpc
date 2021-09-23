@@ -1,3 +1,9 @@
+buildscript {
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
+    }
+}
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.5.21"
     id("org.jetbrains.kotlin.kapt") version "1.5.21"
@@ -6,6 +12,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.allopen") version "1.5.21"
     id("com.google.protobuf") version "0.8.15"
 }
+
+apply plugin: "kotlin-jpa"
 
 version = "0.1"
 group = "br.com.zup"
@@ -35,6 +43,7 @@ dependencies {
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     runtimeOnly("org.postgresql:postgresql")
     implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.xml:micronaut-jackson-xml")
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 

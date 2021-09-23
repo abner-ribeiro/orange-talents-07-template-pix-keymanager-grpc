@@ -4,12 +4,12 @@ import br.com.zup.KeyManagerRegistraServiceGrpc
 import br.com.zup.NovaChaveRequest
 import br.com.zup.NovaChaveResponse
 import br.com.zup.models.ChavePix
-import br.com.zup.pix.client.ErpItauClient
 import br.com.zup.pix.toDto
 import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
+import java.lang.IllegalStateException
 import javax.validation.ConstraintViolationException
 
 @Singleton
@@ -29,7 +29,12 @@ class RegistraChave(
                     .withDescription(e.message)
                     .asRuntimeException()
             )
-        }catch(e: ChavePixCadastradaException){
+        }catch (e: IllegalStateException){
+            responseObserver?.onError(Status.INTERNAL
+                .withDescription(e.message)
+                .asRuntimeException())
+        }
+        catch(e: ChavePixCadastradaException){
             responseObserver?.onError(
                 Status.ALREADY_EXISTS
                     .withDescription(e.message)

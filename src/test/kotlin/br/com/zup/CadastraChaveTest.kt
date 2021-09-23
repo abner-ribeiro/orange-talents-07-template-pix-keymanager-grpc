@@ -1,5 +1,6 @@
 package br.com.zup
 import br.com.zup.models.ChavePix
+import br.com.zup.models.Conta
 import br.com.zup.pix.registra.ChavePixCadastradaException
 import br.com.zup.repositorio.ChavePixRepository
 import io.grpc.ManagedChannel
@@ -37,7 +38,7 @@ internal class CadastraChaveTest(
             .setClienteId(clienteId)
             .setTipoChave(TipoChave.EMAIL)
             .setChave("abner@teste.com")
-            .setTipoConta(TipoConta.CORRENTE)
+            .setTipoConta(TipoConta.CONTA_CORRENTE)
             .build())
 
         assertNotNull(response.pixId)
@@ -49,14 +50,22 @@ internal class CadastraChaveTest(
         chavePixRepository.save(ChavePix(clienteId = clienteId,
             tipoChave = TipoChave.EMAIL,
             chave = "abner@teste.com",
-            tipoConta = TipoConta.CORRENTE))
+            tipoConta = TipoConta.CONTA_CORRENTE,
+            conta = Conta(
+                instituicao = "ITAU",
+                nomeDoTitular = "abner filipe",
+                cpfDoTitular = "06785629110",
+                agencia = "0001",
+                numeroDaConta = "1234"
+            )
+        ))
 
         val error = assertThrows<StatusRuntimeException> {
             grpcClient.cadastraChave(NovaChaveRequest.newBuilder()
                 .setClienteId(clienteId)
                 .setTipoChave(TipoChave.EMAIL)
                 .setChave("abner@teste.com")
-                .setTipoConta(TipoConta.CORRENTE)
+                .setTipoConta(TipoConta.CONTA_CORRENTE)
                 .build())
         }
         assertEquals(Status.ALREADY_EXISTS.code, error.status.code)
@@ -70,7 +79,7 @@ internal class CadastraChaveTest(
                 .setClienteId(clienteId)
                 .setTipoChave(TipoChave.EMAIL)
                 .setChave("")
-                .setTipoConta(TipoConta.CORRENTE)
+                .setTipoConta(TipoConta.CONTA_CORRENTE)
                 .build())
         }
         assertEquals(Status.INVALID_ARGUMENT.code, error.status.code)
@@ -83,7 +92,7 @@ internal class CadastraChaveTest(
                 .setClienteId(clienteId)
                 .setTipoChave(TipoChave.EMAIL)
                 .setChave("abc")
-                .setTipoConta(TipoConta.CORRENTE)
+                .setTipoConta(TipoConta.CONTA_CORRENTE)
                 .build())
         }
         assertEquals(Status.INVALID_ARGUMENT.code, error.status.code)
@@ -97,7 +106,7 @@ internal class CadastraChaveTest(
                 .setClienteId("abc")
                 .setTipoChave(TipoChave.EMAIL)
                 .setChave("teste@teste.com")
-                .setTipoConta(TipoConta.CORRENTE)
+                .setTipoConta(TipoConta.CONTA_CORRENTE)
                 .build())
         }
         assertEquals(Status.NOT_FOUND.code, error.status.code)

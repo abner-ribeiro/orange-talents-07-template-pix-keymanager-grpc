@@ -32,12 +32,13 @@ enum TipoChave{
   CPF = 1;
   TELEFONE = 2;
   EMAIL = 3;
-  ALEATORIA = 4;
+  CNPJ = 4;
+  ALEATORIA = 5;
 }
 enum TipoConta{
   CONTA_DESCONHECIDA = 0;
-  CORRENTE = 1;
-  POUPANCA = 2;
+  CONTA_CORRENTE = 1;
+  CONTA_POUPANCA = 2;
 }
 
 message NovaChaveResponse {

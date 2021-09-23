@@ -11,6 +11,7 @@ import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
+import java.lang.IllegalStateException
 import javax.validation.ConstraintViolationException
 
 @Singleton
@@ -23,7 +24,12 @@ class RemoveChave(val removeChaveService: RemoveChaveService) : KeyManagerRemove
 
         try{
             removeChaveService.validaERemove(removeChaveDto)
-        }catch (e: ConstraintViolationException){
+        }catch (e: IllegalStateException){
+            responseObserver?.onError(Status.INTERNAL
+                .withDescription(e.message)
+                .asRuntimeException())
+        }
+        catch (e: ConstraintViolationException){
             responseObserver?.onError(
                 Status.INVALID_ARGUMENT
                     .withDescription(e.message)

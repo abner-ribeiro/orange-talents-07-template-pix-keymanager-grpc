@@ -1,6 +1,7 @@
 package br.com.zup
 
 import br.com.zup.models.ChavePix
+import br.com.zup.models.Conta
 import br.com.zup.repositorio.ChavePixRepository
 import io.grpc.ManagedChannel
 import io.grpc.Status
@@ -32,7 +33,15 @@ internal class RemoveChaveTest(
         chavePixRepository.save(ChavePix(clienteId = clienteId,
             tipoChave = TipoChave.EMAIL,
             chave = "abner@teste.com",
-            tipoConta = TipoConta.CORRENTE))
+            tipoConta = TipoConta.CONTA_CORRENTE,
+            conta = Conta(
+                instituicao = "ITAU",
+                nomeDoTitular = "abner filipe",
+                cpfDoTitular = "06785629110",
+                agencia = "0001",
+                numeroDaConta = "1234"
+            )
+        ))
 
         assertTrue(chavePixRepository.existsById(1L))
 
@@ -75,7 +84,15 @@ internal class RemoveChaveTest(
         chavePixRepository.save(ChavePix(clienteId = clienteId,
             tipoChave = TipoChave.EMAIL,
             chave = "abner@teste.com",
-            tipoConta = TipoConta.CORRENTE))
+            tipoConta = TipoConta.CONTA_CORRENTE,
+            conta = Conta(
+                instituicao = "ITAU",
+                nomeDoTitular = "abner filipe",
+                cpfDoTitular = "06785629110",
+                agencia = "0001",
+                numeroDaConta = "1234"
+            )
+        ))
 
         assertTrue(chavePixRepository.existsById(1L))
 
