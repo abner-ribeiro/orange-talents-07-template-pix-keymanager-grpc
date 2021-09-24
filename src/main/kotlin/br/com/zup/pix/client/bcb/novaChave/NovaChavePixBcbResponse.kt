@@ -1,4 +1,4 @@
-package br.com.zup.pix.client.bcb
+package br.com.zup.pix.client.bcb.novaChave
 
 import br.com.zup.pix.client.bcb.novaChave.ChavePixTipoBcbRequest
 import br.com.zup.pix.client.bcb.novaChave.ContaBcbRequest

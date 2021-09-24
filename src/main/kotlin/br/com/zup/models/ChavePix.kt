@@ -2,6 +2,7 @@ package br.com.zup.models
 
 import br.com.zup.TipoChave
 import br.com.zup.TipoConta
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
@@ -19,6 +20,7 @@ class ChavePix(
 ) {
     @field: Id @field: GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
+    val criadaEm: LocalDateTime = LocalDateTime.now()
     override fun toString(): String {
         return "ChavePix(clienteId=$clienteId, tipoChave=$tipoChave, chave=$chave, tipoConta=$tipoConta, conta=$conta, id=$id)"
     }

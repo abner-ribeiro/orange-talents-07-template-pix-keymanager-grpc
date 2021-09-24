@@ -1,7 +1,6 @@
 package br.com.zup.pix.registra
 
 import br.com.zup.models.ChavePix
-import br.com.zup.models.Conta
 import br.com.zup.pix.client.bcb.*
 import br.com.zup.pix.client.bcb.novaChave.*
 import br.com.zup.pix.client.itau.ContaResponse

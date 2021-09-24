@@ -1,9 +1,8 @@
 package br.com.zup.pix
 
-import br.com.zup.NovaChaveRequest
-import br.com.zup.RemoveChaveRequest
-import br.com.zup.TipoChave
-import br.com.zup.TipoConta
+import br.com.zup.*
+import br.com.zup.pix.dto.DetalhaChaveDto
+import br.com.zup.pix.dto.FiltroPixIdDto
 import br.com.zup.pix.dto.NovaChaveDto
 import br.com.zup.pix.dto.RemoveChaveDto
 
@@ -20,4 +19,12 @@ fun RemoveChaveRequest.toDto(): RemoveChaveDto{
         clienteId = clienteId,
         pixId = pixId
     )
+}
+
+fun EncontraChaveRequest.toDto(): DetalhaChaveDto{
+    return DetalhaChaveDto(pixId = FiltroPixIdDto(
+        clienteId = pixId.clienteId,
+        pixId = pixId.pixId
+    ),
+    chave = chave)
 }

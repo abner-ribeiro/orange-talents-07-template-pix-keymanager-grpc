@@ -2,7 +2,9 @@ package br.com.zup.pix.client.bcb
 
 import br.com.zup.pix.client.bcb.deletaChave.DeletaChavePixBcbRequest
 import br.com.zup.pix.client.bcb.deletaChave.DeletaChavePixBcbResponse
+import br.com.zup.pix.client.bcb.detalhaChave.DetalhaChavePixBcbResponse
 import br.com.zup.pix.client.bcb.novaChave.NovaChavePixBcbRequest
+import br.com.zup.pix.client.bcb.novaChave.NovaChavePixBcbResponse
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
@@ -26,5 +28,5 @@ interface BancoCentralClient {
         produces = [MediaType.APPLICATION_XML],
         consumes = [MediaType.APPLICATION_XML]
     )
-    fun findByKey(@PathVariable key: String): HttpResponse<DetalhaChavePixBcbRequest>
+    fun findByKey(@PathVariable key: String): HttpResponse<DetalhaChavePixBcbResponse>
 }
